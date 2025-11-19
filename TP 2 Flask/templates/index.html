@@ -1,0 +1,26 @@
+{%extends "base.html"%}
+{%block content%}
+<h1>Todos liste</h1>
+{%if tasks|length == 0 %}
+la liste est vide
+{%else%}
+{%for t in tasks%}
+<ul id="taches">
+    <li>la tache N°{{t.id}} :{{t.title}} => {%if t.done==True%} Valider {%else%} pas encore {%endif%}
+    
+    <a href="{{ url_for('done',task_id=t.id)}}">Terminer</a>
+    <a href="{{url_for('delete',task_id=t.id)}}" class="sup">Supprimer</a>
+    </li>
+</ul>
+{%endfor%}
+{% endif %}
+<form action="/add" method="POST">
+    <input type="text" name="tache">
+    <button type="submit">ajouter</button>
+</form>
+{% for msg in get_flashed_messages() %}
+    <p style="color:red;">{{ msg }}</p>
+{% endfor %}
+<input type="text" id="search" placeholder="Rechercher...">
+<script src="static/main.js"></script>
+{%endblock%}
